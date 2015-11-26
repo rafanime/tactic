@@ -3,7 +3,6 @@
 <head>
 
 <script type="text/javascript" src="../script/jquery.min.js"></script>
-<script type="text/javascript" src="../script/rtree.js"></script>
 <script type="text/javascript" src="../script/tactic.js" ></script>
 
 </head>
@@ -22,7 +21,6 @@
 			height: 300px;
 			left: 38%;
 			top: 40%;
-			position: absolute;
 		}
 		.rectangle2{
 			font-family: Segoe UI;
@@ -31,9 +29,7 @@
 			width:600px;
 			height: 400px;
 			left: 38%;
-			top: 40%;
-			position: absolute;
-		}
+			top: 40%;		}
 		.rectangle3{
 			font-family: Segoe UI;
 			font-size: 50px;
@@ -42,7 +38,6 @@
 			height: 500px;
 			left: 38%;
 			top: 40%;
-			position: absolute;
 		}
 
 		html, body {
@@ -91,24 +86,20 @@
 
 		$('.object-aware').bind('object.add', function() {
 			changeColorYellow($(this));
-						console.log("add")
 
 		});
 
 		$('.object-aware').bind('object.update', function() {
 			changeColorRed($(this));
-						console.log("update")
 
 		});
 
 		$('.object-aware').bind('object.remove', function() {
 			changeColorYellow($(this));
-			console.log("remove")
 		});
 
 		$('.object-aware').bind('object.release', function() {
 			changeColorYellow($(this));
-						console.log("release")
 
 		});
 
@@ -118,10 +109,7 @@
 </script>
 
 <body>
-<div class="rectangle3 movable object-aware" >Touch me</div>
-
-<div class="rectangle2 movable object-aware" >Touch me</div>
-<div class="rectangle movable object-aware" >Touch me</div>
+<div class="rectangle touchable object-aware" >Touch me</div>
 <div id="feedback" ></div>
 
 </body>
