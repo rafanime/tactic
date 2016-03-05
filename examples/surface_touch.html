@@ -1,0 +1,379 @@
+<html>
+
+<head>
+
+<script type="text/javascript" src="../script/jquery.min.js"></script>
+<script type="text/javascript" src="../script/tactic.js" ></script>
+
+</head>
+
+    <style type="text/css">		
+		
+
+		html, body {
+			overflow: hidden;
+			padding: 0; margin: 0;
+			text-align: center;
+			background-color: rgb(255, 50, 100);
+		}
+
+		.circleBase {
+		    border-radius: 50%;
+		}
+
+		.squareBase{
+			width: 20%;
+			height: 20%;
+			position: absolute;
+		}
+
+		.type1 {
+		    width: 100px;
+		    height: 100px;
+		    background: yellow;
+		    border: 3px solid red;
+		    position: absolute;
+		    z-index: 90;
+		}
+		.type3 {
+		    width: 220px;
+		    height: 220px;
+		    background: none;
+		    border: 30px solid blue;
+		    position: absolute;
+		    z-index: 100;
+		    left:43%;
+		    top:43%;
+		}
+
+
+		#counter{
+			font-size: 100px;
+			font-family: sans-serif;
+
+		}
+
+		#points{
+
+			font-size: 100px;
+			font-family: sans-serif;
+
+		}
+
+		#maxScore{
+
+			font-size: 100px;
+			font-family: sans-serif;
+
+		}
+
+	.menu {
+		width: 90%;
+		height: 90%;
+
+	}
+		html, body {
+			background-color: rgb(255, 50, 100);
+		}
+	.ball {
+		display: inline-block;
+		overflow: visible;
+		margin: 3% 2% 25px 2%;
+		line-height: 300px;
+
+		color: rgba(255,255,255,1);
+		text-decoration: none;
+		background-color: rgba(219,87,5,1);
+		font-family: 'Yanone Kaffeesatz';
+		font-weight: 700;
+		font-size: 3em;
+		
+		border-radius: 200px;
+		-webkit-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+		-moz-box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+		box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+		width: 280px;
+		height: 280px;
+		text-align: center;
+		-webkit-transition: all .1s ease;
+		-moz-transition: all .1s ease;
+		-ms-transition: all .1s ease;
+		-o-transition: all .1s ease;
+		transition: all .1s ease;
+	}
+
+	.ball.active{
+		-webkit-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+		-moz-box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+		box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+		position: relative;
+		top: 6px;
+		z-index: 0;
+	}	
+	</style>
+
+<script type="text/javascript">
+	$(function() {
+		
+		initTracking();				
+
+		var w = $(window).width(), h = $(window).height();
+
+		var items = [];
+
+		var seconds;
+		var miliseconds;
+		var intervalTimer;
+
+		var targetsCaught;
+		var wrongTargetsCaught;
+		var gameRunning = false;
+
+		$('.type3').bind('touch.press', function() {
+			if(gameRunning == false) {
+				gameRunning = true;
+				startGame();
+				generateObjects(4);
+			}
+		});
+
+		function startGame() {
+			startTimer(30);
+			targetsCaught = 0;
+			wrongTargetsCaught = 0;
+			gameRunning = true;
+		}
+
+		function finishGame(){
+			$('.type3').remove();
+
+			$('.menu').append("<div class='touchable ball' data-goto='next'>Next</div>");
+
+			refreshTracking();
+			bindOptions();
+		}
+
+		var nextGame = "";
+		function bindOptions(){
+			$('.ball').bind('touch.press', function() {
+				var $this = $(this);
+				var id = $this.attr('data-goto');
+
+				if(id=='next') {
+					$('.ball').remove();
+					$('.menu').append("<div class='touchable ball' data-goto='tangible'>Tangible</div><div class='touchable ball' data-goto='smart'>Smart</div>");
+					refreshTracking();
+					bindOptions();
+				}
+
+				if(id=='tangible' || id=='smart') {
+					$('.ball').remove();
+					
+					$('.menu').append("<div class='touchable ball' data-goto='start'>Start</div>");
+					nextGame = id;
+					refreshTracking();
+					bindOptions();
+				}
+
+				if(id == "start") {
+
+					var page = "surface_".concat(nextGame).concat(".html");
+					
+					location.href =  page;	
+
+				}
+
+			});
+		}
+
+		function score() {
+			$('#points').text('| ' + targetsCaught + ' targets');
+		}
+
+		function startTimer (totalTime) {
+			seconds = 0;
+			miliseconds = 0;
+
+			intervalTimer = setInterval(function() {
+
+				 if(seconds == totalTime) {
+				 	clearInterval(intervalTimer);
+				 	gameRunning = false;
+				 	finishGame();
+				 
+				 }
+				 else {
+				 	miliseconds++;
+
+					 if(miliseconds == 100) {
+					 	seconds++;
+					 	miliseconds = 0;
+					 } 
+
+					 showTime(seconds, miliseconds);
+				}
+
+			}, 10);
+		}
+		function showTime(seconds, miliseconds){
+			var secondsShown = seconds;
+			var milisecondsShown = miliseconds;
+			if(seconds < 10) secondsShown = 0 + "" + seconds;
+			if(miliseconds < 10) milisecondsShown = 0 + "" + miliseconds
+
+			$('#counter').text(secondsShown + ":" + milisecondsShown)
+
+		}
+
+		function addCircle(x, y) {
+			var jqueryObj = $("<div id='target' class='circleBase type1 touchable' style='left: " + x + "px; top: " + y + "px'></div>").appendTo('body');
+
+			
+			return jqueryObj;
+		}
+
+		function addSquare(x, y) {
+			var jqueryObj = $("<div class='squareBase type1 touchable' style='left: " + x + "px; top: " + y + "px'></div>").appendTo('body');
+
+			
+			return jqueryObj;
+		}
+
+		function bind() {
+			$('#target').bind('touch.press', function(){
+				if(gameRunning) {
+					if($(this).css('display') == "block") {
+						$(this).remove();
+
+						targetsCaught++;
+						score();
+						generateObjects(4);
+					}	
+				}
+
+			});
+
+			$('.squareBase').bind('touch.press', function(){
+				if(gameRunning) if($(this).css('display') == "block") $(this).remove();
+			});
+		}
+
+		$('.type3').bind('touch.update', function(event, data) {
+
+			if(gameRunning) {
+				var div = $('#follower');
+				generateColor(div.position().left, div.position().top);
+				
+				items.map(function($el) {
+					if($el.x > div.position().left && $el.x < div.position().left + div.width()
+					&& $el.y > div.position().top && $el.y < div.position().top + div.height()) {
+							if($($el.element).css('display') == "none") {
+								$($el.element).show();								}
+						} else {
+							if($($el.element).css('display') == "block") {
+								//$($el.element).hide();
+							}
+						}	
+				});
+	
+			}
+		
+		});
+
+
+		function generateColor(x, y) {
+			
+			var x2 = items[0].x;
+			var y2 = items[0].y
+
+			var distance = getDistance(x, y, x2, y2);
+			
+			var redValue = Math.round(distance / 3.92);
+
+			var rgb = "rgb(" +  redValue + ",50,100)";
+			$('body').css("background-color", rgb);
+			
+		}
+
+
+
+		function generateObjects(n_objects) {
+			$('.type1').remove();
+
+			var wSize = w/10;
+			var hSize = h/7;
+			var i;
+			var j;
+			var positions = [];
+
+			items = [];
+			for (j = 1; j < 6; j++ )
+				for (i = 1; i < 9; i++) 
+					positions.push({x: (wSize * i), y: (hSize * j)});			
+
+			var indexes = getNumbers(n_objects, positions.length);
+
+			var position = positions[indexes[0]];
+			var el = addCircle(position.x, position.y);
+			items.push({element: el, x: position.x, y: position.y});
+
+			for(var i = 0; i < n_objects - 1; i++) {
+				var position = positions[indexes[i+1]];
+				var el = addSquare(position.x, position.y);
+				items.push({element: el, x: position.x, y: position.y});
+			}
+			
+			
+			refreshTracking();
+			bind();
+			$('#target').hide();
+			$('.squareBase').hide();
+			
+		} 
+
+		function getNumbers(n_numbers, maxrange) {
+			var arr = []
+				while(arr.length < n_numbers){
+				  var randomnumber=Math.ceil(Math.random()*maxrange-1)
+				  var found=false;
+				  for(var i=0;i<arr.length;i++){
+					if(arr[i]==randomnumber){found=true;break}
+				  }
+				  if(!found)arr[arr.length]=randomnumber;
+				}
+			return arr;
+		}
+
+		function getDistance(x, y, x2, y2 ){
+		  var xs = 0;
+		  var ys = 0;
+		  
+		  xs = 
+		  xs = x2 - x;
+		  xs = xs * xs; 
+		 
+		  ys = y2 - y;
+		  ys = ys * ys;
+		 
+		  return Math.sqrt( xs + ys );
+		}
+		
+	});
+
+
+</script>
+
+<body>
+
+	<div id="follower" class="circleBase type3 touchable movable"></div>
+	<div id="score">
+
+	<a id="counter"> 00:00 </a>
+	<a id="points">|  0  targets </a>
+		</div>
+	<div class="menu">
+	</div>
+
+</body>
+
+</html>
