@@ -55,7 +55,6 @@
 <script type="text/javascript">
 	$(function() {
 		initTracking(true);
-		initMessaging('127.0.0.1:3333');
 
 		function setText(textValue) {
 			$('#feedback').text(textValue);
@@ -73,12 +72,6 @@
 			changeColorRed($(this));
 		});
 
-		/**
-		$('.rectangle').bind('touch.update', function() {
-			setText('moving inside div');
-		});
-		*/
-
 		$('.touchable').bind('touch.remove', function() {
 			changeColorYellow($(this));
 		});
@@ -91,11 +84,7 @@
 			changeColorRed($(this));
 
 		});
-
-		$('.object-aware').bind('object.update', function() {
-console.log("update");
-		});
-
+		
 		$('.object-aware').bind('object.remove', function() {
 			changeColorYellow($(this));
 		});
