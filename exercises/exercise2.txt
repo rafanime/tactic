@@ -1,0 +1,3 @@
+Step 1 - Make the rectangle's color red when object 3 enters its area and yellow again after it extis
+
+Step 2 - Display a message on screen when moving with object 4 inside the rectangle
