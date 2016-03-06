@@ -23,25 +23,6 @@
 			top: 40%;
 			position:absolute;
 		}
-		.rectangle2{
-			font-family: Segoe UI;
-			font-size: 50px;
-			background-color: rgb(150, 150, 0);
-			width:600px;
-			height: 400px;
-			left: 38%;
-			top: 40%;
-			position:absolute;		}
-		.rectangle3{
-			font-family: Segoe UI;
-			font-size: 50px;
-			background-color: rgb(100, 250, 0);
-			width:700px;
-			height: 500px;
-			left: 38%;
-			top: 40%;
-			position:absolute;
-		}
 
 		html, body {
 			overflow: hidden;
@@ -68,39 +49,13 @@
 			$(stuff).css('background-color', 'yellow');
 		}
 
-		$('.touchable').bind('touch.press', function() {
-			changeColorRed($(this));
-		});
-
-		$('.touchable').bind('touch.remove', function() {
-			changeColorYellow($(this));
-		});
-		
-		$('.touchable').bind('touch.release', function() {
-			changeColorYellow($(this));
-		});
-
-		$('.object-aware').bind('object.add', function() {
-			changeColorRed($(this));
-
-		});
-		
-		$('.object-aware').bind('object.remove', function() {
-			changeColorYellow($(this));
-		});
-
-		$('.object-aware').bind('object.release', function() {
-			changeColorYellow($(this));
-
-		});
-
 	});
 
 
 </script>
 
 <body>
-<div class="rectangle touchable movable object-aware" >Touch me</div>
+<div class="rectangle" ></div>
 <div id="feedback" ></div>
 
 </body>

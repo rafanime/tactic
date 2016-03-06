@@ -1,0 +1,5 @@
+Step 1 - Make the rectangle's color red when touched and yellow again when released
+
+Step 2 - Display a message on screen when moving with touch inside the rectangle
+
+Step 3 - Make the rectangle move when dragged through touch
