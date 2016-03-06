@@ -19,8 +19,8 @@ class PolicyHandler(TCPHandler):
             self.request.sendall(policy)
 
 def handle_policy():
-    print 'Serving policy on port 843'
-    TCPServer(('', 843), PolicyHandler).serve_forever()
+    print 'Serving policy on port 800'
+    TCPServer(('', 800), PolicyHandler).serve_forever()
     
 def handle_files():
     print 'Serving files on port 8000'
