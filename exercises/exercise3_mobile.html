@@ -3,7 +3,7 @@
 <head>
 
 <script type="text/javascript" src="../script/jquery.min.js"></script>
-<script type="text/javascript" src="../script/tactic.js" ></script>
+<script type="text/javascript" src="../script/tactic.min.js" ></script>
 
 </head>
     <style type="text/css">		
@@ -36,7 +36,6 @@
 <script type="text/javascript">
 	$(function() {
 		initTracking(true);
-		initMessaging('192.168.0.100:3333');
 
 		function setText(textValue) {
 			$('#feedback').text(textValue);
@@ -46,12 +45,6 @@
 		function changeColorRed(stuff) {
 			$(stuff).css('background-color', 'red');
 		}
-		
-		
-		$('.touchable').bind('touch.press', function(){
-			changeColorRed($(this));
-			socket.emit('message', "hello");
-		});
 
 
 	});
@@ -60,7 +53,7 @@
 </script>
 
 <body>
-<div class="rectangle touchable" ></div>
+<div class="rectangle" ></div>
 <div id="feedback" ></div>
 
 </body>
