@@ -3,6 +3,13 @@ TACTIC (Tangible and Tabletop Continuous Interaction) sends touch, tangible and 
 applications
 
 ##Getting started
+
+1. Make sure you have RabbitMQ running on your PC
+2. Start the tuio_rabbitmq_dumper.jar which will gather TUIO information from your system and provide it to RabbitMQ
+3. Run the python server with ```python server.py````
+4. ```(Optional)``` If you require nodeJS, initialise it with ```node script/server_node.js````
+5. Develop your code and access it through the browser on ```localhost:8000```
+
 A new app starts by including the following scripts:
 ```javascript
 <script type="text/javascript" src="../script/jquery.min.js"></script>
