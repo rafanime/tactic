@@ -46,8 +46,71 @@ fingers_moved - Event triggered while fingers are detected
 
 ###Element classes 
 ```Javascript
-.touchable -> allows element to receive touch events when touches are registered inside it
-.movable -> allows element to move when a touch is registered inside it followed by dragging motion
-.object-aware -> allows element to receive tangible events when a tangible is registered inside it
+.touchable - allows element to receive touch events when touches are registered inside it
+.object-aware - allows element to receive tangible events when a tangible is registered inside it
+.movable - allows element to move when a touch is registered inside it followed by dragging motion
 ```
+
+###Subscribing to events
+Thanks to jQuery it's easy to subscribe to events by using selectors, which can point to classes or IDs directly.
+
+Let's say you have an element of class button with represents a big button on your screen, and you want it to do something when you touch it. First you will need to add the class touchable to it.
+
+```Javascript
+<div class="button touchable"></div>
+````
+Next, you just need to bind it to the corresponding event and you're good to go.
+
+```Javascript 
+$('.button').bind('touch.press', function() {
+    alert("I was pressed");
+});
+```
+
+Events can also provide additional data. Here is an example on how to reach this data.
+
+```Javascript
+$(*).bind('object_hovering', function(event, data) {
+    console.log("object " + data.id + " is hovering the table on " + data.hand + " hand!");
+});
+
+//output could be -> "object 0 is hovering the table on right hand!"
+```
+
+##Exchange information between applications
+
+TACTIC contains an integrated node.js component that allows users to send and receive messages between web applications easily without having to initiate any variables or messaging protocols. This allows applications to communicate with each other even in a cross-device setting.
+
+###Publish messages (example)
+```Javascript
+socket.emit('message', "hello");
+```
+
+###Subscribe to messages (example)
+```Javascript
+socket.on('message', function8~(msg) {
+    console.log(msg);
+});
+```
+
+##Publish & Subscribe messages
+
+We use rabbitMQ, a messaging framework, for easy communication between different languages. Currently this is used for data management between the Java Hand Tracking component and the Javascript API, but if you would like to add a new module, you can add new bridges of communication for your languages. You can check out RabbitMQ to learn how to integrate it with existing languages you may already be using. Meanwhile we've got you covered on the Javascript front.
+
+###Subscribing to data (example)
+```Javascript
+MQ.queue("auto", {autoDelete : true}).bind("handInfo", "*.handPosition").callback(function(m) {
+    console.log(m.data);
+});
+```
+
+###Publishing data (example)
+```Javascript
+MQ.topic('handInfo').publish({
+        //...
+        //place object here
+        //...
+}, 'app.finish');
+```
+
 
