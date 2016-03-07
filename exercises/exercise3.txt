@@ -1,0 +1,5 @@
+Step 1 - Edit the mobile page to send a hello message when the mobile page's body is touched
+
+Setp 2 - Edit the computer/table's page to display a message on screen when receiving a message from the phone
+
+Tip: don't forget to initialize messaging with appropriate addresses
