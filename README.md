@@ -8,7 +8,7 @@ applications
 2. Start the tuio_rabbitmq_dumper.jar which will gather TUIO information from your system and provide it to RabbitMQ
 3. Run the python server with ```python server.py```
 4. Develop your code and access it through the browser on ```localhost:8000```
-5. ```(Optional)``` If you require NodeJS communication, initialise it with ```node script/server_node.js``` and add the following code to your app ``ìnitMessaging('yourComputerAddress:3333')```
+5. ```(Optional)``` If you require NodeJS communication, initialise it with ```node script/server_node.js``` and add the following code to your app ```initMessaging('yourComputerAddress:3333')```
 
 A new app starts by including the following scripts:
 ```javascript
